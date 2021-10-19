@@ -4,7 +4,8 @@ import json
 import requests
   
 # api-endpoint
-URL = "https://servicios.ine.es/wstempus/jsstat/ES/DATASET/24387?nult=4"
+#movimientos migratorios: "https://servicios.ine.es/wstempus/jsstat/ES/DATASET/24387?nult=4
+URL = "https://servicios.ine.es/wstempus/jsstat/ES/DATASET/6566"
   
   
 # sending get request and saving the response as response object
@@ -13,16 +14,21 @@ r = requests.get(URL)
 # extracting data in json format
 data = r.json()
 
+f = open("demografico.json", "w", encoding='utf-8') #wb unicode
+f.write(json.dumps(data, indent=4, ensure_ascii=False))
+f.close()
+
 # print(data['dimension'])
 
-dimension = data['dimension'] 
-values = data['value']  
-labels = data['dimension']['sexo']['category']['label']
+#dimension = data['dimension'] 
+#values = data['value']  
+#labels = data['dimension']['sexo']['category']['label']
+
+"""
 print (len(dimension))
 for i in range(3):
     print (values[i])
-
-print('labels:')
+"""
 
 class obj(object):
     def __init__(self, d):
@@ -57,21 +63,44 @@ for key, value in data['dimension'].items():
         list.append(value1)
     newDict[value['label']] = list
 
-print ("_------------------_")
 
-j = 0
-for i in range(len(myLabels)):
-    print("**",newDict[myLabels[0]][i],'**')
-    y = 0
-    for item in newDict[myLabels[1]]:
-        print("  ",newDict[myLabels[1]][y])
-        y+=1
-        l = 0
-        for item in newDict[myLabels[2]]:
-            print("    ",newDict[myLabels[2]][l], 'value:', data['value'][j])
-            l+=1
-            j+=1
+def export_results(newDict, myLabels):
+    f = open("demofile2.txt", "w", encoding='utf-8')
+    j = 0
+    for i in range(len(myLabels)):
+        text = "**"+str(newDict[myLabels[0]][i])+'**'+'\n'
+        f.write(text)
+        y = 0
+        for item in newDict[myLabels[1]]:
+            text = "  "+str(newDict[myLabels[1]][y])+'\n'
+            f.write(text)
+            y+=1
+            l = 0
+            for item in newDict[myLabels[2]]:
+                text = "    "+str(newDict[myLabels[2]][l])+' value: '+ str(data['value'][j])+'\n'
+                f.write(text)
+                l+=1
+                j+=1
+    f.close()
 
+"""
+print ("Exporting results")
+export_results(newDict, myLabels)
+print("End of exporting results")
+"""
+def print_results():
+    j = 0
+    for i in range(len(myLabels)):
+        print("**",newDict[myLabels[0]][i],'**')
+        y = 0
+        for item in newDict[myLabels[1]]:
+            print("  ",newDict[myLabels[1]][y])
+            y+=1
+            l = 0
+            for item in newDict[myLabels[2]]:
+                print("    ",newDict[myLabels[2]][l], 'value:', data['value'][j])
+                l+=1
+                j+=1
 # for key in dimension:
 #     for newkey in dimension[key]['category']['label']:
 #         print('***',dimension[key]['category']['label'][newkey],'***')
