@@ -14,6 +14,8 @@ url = "https://servicios.ine.es/wstempus/jsstat/ES/DATASET/24387?nult=4"
 #Employment rates of young people not in education and training by sex, educational attainment level and years since completion of highest level of education
 # edat_lfse_24?filterNonGeo=1&precision=1&sex=T&duration=TOTAL&unit=PC&isced11=TOTAL&time=2014&time=2015&time=2016&time=2017&time=2018&time=2019&age=Y15-34&age=Y18-34&age=Y20-34 
 
+
+
 response = urlopen(url)
 
 #data = response.read()
