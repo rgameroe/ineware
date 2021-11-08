@@ -5,8 +5,9 @@ import requests
 
 class DatasetINE:
     def __init__(self, url):
-        self.URL = url
+        self.url = url
         self.data = requests.get(url).json()
+        self.values = self.data['value']
 
         new_dict = {}
         my_labels = []
@@ -19,6 +20,9 @@ class DatasetINE:
             new_dict[value['label']] = aux_list
         self.labels = my_labels
         self.dict = new_dict
+
+    def __str__(self):
+        return "Dataset name = " + self.data['label'] + "\n" + "Dataset url = " + self.url
 
     def export_json(self, filename):
         print("exporting dataset to file", filename, "...")
@@ -52,11 +56,21 @@ class DatasetINE:
                         j += 1
 
 
-myURL = "https://servicios.ine.es/wstempus/jsstat/ES/DATASET/24387?nult=4"
-my_dataset = DatasetINE(myURL)
+#my_url = "https://servicios.ine.es/wstempus/jsstat/ES/DATASET/24387?nult=4"
+my_url = "https://servicios.ine.es/wstempus/jsstat/ES/DATASET/22254?nult=3"
+my_dataset = DatasetINE(my_url)
 
 print(my_dataset.labels)
 print('---------------')
 print(my_dataset.dict)
 
-#my_dataset.print_values()
+print(my_dataset)
+
+# counter = 1
+# for value in my_dataset.values:
+#     print("Value number ", counter, " : ", value)
+#     counter += 1
+#
+# print(my_dataset.values)
+
+# my_dataset.print_values()
