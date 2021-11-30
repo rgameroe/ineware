@@ -10,7 +10,7 @@ class DatasetValue:
         self.value = value
 
     def __str__(self):
-        return "Element = " + self.label1 + ", " + self.label2 + ", value: " + str(self.value)
+        return " " + self.label1 + ", " + self.label2 + ", value: " + str(self.value)
 
     def get_label1(self):
         return str(self.label1)
@@ -60,10 +60,19 @@ class DatasetINE:
             print(item)
 
     def get_value(self, label1, label2):
-        for item in self.valuesList:
-            if item.label1 == label1 and item.label2 == label2:
-                return item
-        return 'Labels not found'
+        if label2 == '':
+            for item in self.valuesList:
+                if item.label1 == label1:
+                    print(item)
+        if label1 == '':
+            for item in self.valuesList:
+                if item.label2 == label2:
+                    print(item)
+        else:
+            for item in self.valuesList:
+                if item.label1 == label1 and item.label2 == label2:
+                    return item
+            return 'Labels not found'
 
     def print_values(self):
         print("________print_results call__________")

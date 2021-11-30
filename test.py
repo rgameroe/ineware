@@ -21,7 +21,7 @@ if __name__ == '__main__':
     """
     print('---get value---')
     my_dataset.save_values()
-    print(my_dataset.get_value('Cáceres', '2021M08'))
+    print(my_dataset.get_value('Cáceres', '2021M10'))
     """
     my_dataset.save_values()
     my_dataset.print_values_list()
