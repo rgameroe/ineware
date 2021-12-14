@@ -1,22 +1,19 @@
 import json
 # importing the requests library
 import requests
+import itertools
 
 
 class DatasetValue:
-    def __init__(self, label1, label2, value):
-        self.label1 = label1
-        self.label2 = label2
+    def __init__(self, labels, value):
+        self.labels = labels
         self.value = value
 
     def __str__(self):
-        return " " + self.label1 + ", " + self.label2 + ", value: " + str(self.value)
+        return str(self.labels) + " value: " + str(self.value)
 
-    def get_label1(self):
-        return str(self.label1)
-
-    def get_label2(self):
-        return str(self.label2)
+    def get_labels(self):
+        return self.labels
 
     def get_value(self):
         return self.value
@@ -41,6 +38,7 @@ class DatasetINE:
             new_dict[value['label']] = aux_list
         self.labels = my_labels
         self.dict = new_dict
+        self.save_values()
 
     def __str__(self):
         return "Dataset name = " + self.data['label'] + "\n" + "Dataset url = " + self.url
@@ -52,6 +50,15 @@ class DatasetINE:
         f.close()
         print("file", filename, "saved")
 
+    def export_values(self, filename):
+        print("exporting values to file", filename, "...")
+        f = open(filename, "w", encoding='utf8')
+        for item in self.valuesList:
+            my_string = str(item) + '\n'
+            f.write(my_string)
+        f.close()
+        print("file", filename, "saved")
+
     def add_value(self, value):
         self.valuesList.append(value)
 
@@ -59,20 +66,25 @@ class DatasetINE:
         for item in self.valuesList:
             print(item)
 
-    def get_value(self, label1, label2):
-        if label2 == '':
-            for item in self.valuesList:
-                if item.label1 == label1:
-                    print(item)
-        if label1 == '':
-            for item in self.valuesList:
-                if item.label2 == label2:
-                    print(item)
+    def get_value(self, *args):
+        result_list = []
+        for value in self.valuesList:
+            if self.exist_label(value, args):
+                result_list.append(value)
+        if len(result_list) > 0:
+            return result_list
         else:
-            for item in self.valuesList:
-                if item.label1 == label1 and item.label2 == label2:
-                    return item
-            return 'Labels not found'
+            print('No values found for labels ' + str(args))
+            return []
+
+    def exist_label(self, value: DatasetValue, label):
+        for item in value.get_labels():
+            if item == label[0]:
+                return True
+            else:
+                return False
+        # set1 = set(value.get_labels())
+        # set2 = set(label)
 
     def print_values(self):
         print("________print_results call__________")
@@ -80,76 +92,34 @@ class DatasetINE:
         if len(self.labels) < 3:
             for i in range(len(self.dict[self.labels[0]]) - 1):
                 print("**", self.dict[self.labels[0]][i], '**')
-                y = 0
                 for item in self.dict[self.labels[1]]:
-                    print("    ", self.dict[self.labels[1]][y], 'value:', self.data['value'][j])
-                    y += 1
+                    print("    ", item, 'value:', self.data['value'][j])
                     j += 1
         else:
-            for i in range(len(self.labels[0])):
-                print("**", self.dict[self.labels[0]][i], '**')
-                y = 0
-                for item in self.dict[self.labels[1]]:
-                    print("  ", self.dict[self.labels[1]][y])
-                    y += 1
-                    l = 0
-                    for item in self.dict[self.labels[2]]:
-                        print("    ", self.dict[self.labels[2]][l])
-                        l += 1
-                        r = 0
-                        for item in self.dict[self.labels[3]]:
-                            print("        ", self.dict[self.labels[3]][r], 'value:', self.data['value'][j])
+            for item in self.dict[self.labels[0]]:
+                print("**", item, '**')
+                for item1 in self.dict[self.labels[1]]:
+                    print("  ", item1)
+                    for item2 in self.dict[self.labels[2]]:
+                        print("    ", item2)
+                        for item3 in self.dict[self.labels[3]]:
+                            print("        ", item3, 'value:', self.data['value'][j])
                             j += 1
 
-    def print_values_2(self):
-        print("________print_results call__________")
-        label_index = 0
-        j = 0
-        counters = [0] * len(self.labels)
-        while True:
-            if counters[label_index] >= len(self.dict[self.labels[label_index]]):
-                counters[label_index] = 0
-                label_index -= 1
-                counters[label_index] += 1
-            print(self.dict[self.labels[label_index]][counters[label_index]])
-            label_index += 1
-            if label_index == len(self.labels) - 1:
-                y = 0
-                for item in self.dict[self.labels[label_index]]:
-                    if j < len(self.values):
-                        print('    ', self.dict[self.labels[label_index]][y], 'value:', self.data['value'][j])
-                        y += 1
-                        j += 1
-                    else:
-                        break
-                label_index -= 1
-                counters[label_index] += 1
-                if counters[0] == len(self.dict[self.labels[0]]):
-                    break
-
     def save_values(self):
-        label_index = 0
-        j = 0
-        counters = [0] * len(self.labels)
-        while True:
-            if counters[label_index] >= len(self.dict[self.labels[label_index]]):
-                counters[label_index] = 0
-                label_index -= 1
-                counters[label_index] += 1
-            label_index += 1
-            if label_index == len(self.labels) - 1:
-                y = 0
-                for item in self.dict[self.labels[label_index]]:
-                    if j < len(self.values):
-                        label1 = self.dict[self.labels[label_index-1]][counters[label_index-1]]
-                        label2 = self.dict[self.labels[label_index]][y]
-                        my_value = DatasetValue(label1, label2, self.data['value'][j])
-                        self.add_value(my_value)
-                        y += 1
-                        j += 1
-                    else:
-                        break
-                label_index -= 1
-                counters[label_index] += 1
-                if counters[0] == len(self.dict[self.labels[0]]):
-                    break
+        # for item in [(x, y, z, h) for x in self.dict[self.labels[0]] for y in self.dict[self.labels[1]] for z in self.dict[self.labels[2]] for h in self.dict[self.labels[3]]]:
+        #     print(item, '*')
+
+        all_list = []
+        for i in range(len(self.labels)):
+            all_list.append(self.dict[self.labels[i]])
+
+        res = list(itertools.product(*all_list))
+
+        for item, value in zip(res, self.data['value']):
+            my_labels = list(item)
+            if value.is_integer():
+                my_value = DatasetValue(my_labels, int(value))
+            else:
+                my_value = DatasetValue(my_labels, value)
+            self.add_value(my_value)
