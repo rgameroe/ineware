@@ -66,25 +66,16 @@ class DatasetINE:
         for item in self.valuesList:
             print(item)
 
-    def get_value(self, *args):
+    def get_value(self, **kwargs):
         result_list = []
         for value in self.valuesList:
-            if self.exist_label(value, args):
+            if exist_label(value, kwargs):
                 result_list.append(value)
         if len(result_list) > 0:
             return result_list
         else:
-            print('No values found for labels ' + str(args))
+            print('No values found for labels ' + str(kwargs))
             return []
-
-    def exist_label(self, value: DatasetValue, label):
-        for item in value.get_labels():
-            if item == label[0]:
-                return True
-            else:
-                return False
-        # set1 = set(value.get_labels())
-        # set2 = set(label)
 
     def print_values(self):
         print("________print_results call__________")
@@ -107,9 +98,6 @@ class DatasetINE:
                             j += 1
 
     def save_values(self):
-        # for item in [(x, y, z, h) for x in self.dict[self.labels[0]] for y in self.dict[self.labels[1]] for z in self.dict[self.labels[2]] for h in self.dict[self.labels[3]]]:
-        #     print(item, '*')
-
         all_list = []
         for i in range(len(self.labels)):
             all_list.append(self.dict[self.labels[i]])
@@ -123,3 +111,30 @@ class DatasetINE:
             else:
                 my_value = DatasetValue(my_labels, value)
             self.add_value(my_value)
+
+
+def exist_label(value: DatasetValue, label):
+    flag = False
+    for item in value.get_labels():
+        if item == label[0]:
+            flag = True
+    return flag
+    # set1 = set(value.get_labels())
+    # set2 = set(label)
+
+
+def exist_label(value: DatasetValue, args):
+    every_label_found = [False] * len(args)
+    counter = 0
+    final_flag = True
+    for item in value.get_labels():
+        for label in args.values():
+            if item == label:
+                every_label_found[counter] = True
+                counter += 1
+    for flag in every_label_found:
+        if flag is False:
+            final_flag = False
+    return final_flag
+    # set1 = set(value.get_labels())
+    # set2 = set(label)
