@@ -22,26 +22,31 @@ class DatasetValue:
 class DatasetINE:
     def __init__(self, url):
         self.url = url
-        self.data = requests.get(url).json()
-        self.values = self.data['value']
-        self.notes = self.data['note']
-        self.valuesList = []
+        if request_error_handler(url):
+            self.data = requests.get(url).json()
+            self.values = self.data['value']
+            self.notes = "------- Dataset notes --------\n" + str(self.data['note']) + "\n--------------------------\n"
+            self.valuesList = []
+            self.labels, self.dict = self.create_dict()
+            self.save_values()
 
+    def __str__(self):
+        return "------- Dataset info --------\n" + \
+               "Name = " + self.data['label'] + "\n" +\
+               "url = " + self.url + "\n" +\
+               "-----------------------------\n"
+
+    def create_dict(self):
         new_dict = {}
         my_labels = []
         for key, value in self.data['dimension'].items():
             new_dict[value['label']] = {}
             my_labels.append(value['label'])
             aux_list = []
-            for key, value1 in value['category']['label'].items():
+            for key1, value1 in value['category']['label'].items():
                 aux_list.append(value1)
             new_dict[value['label']] = aux_list
-        self.labels = my_labels
-        self.dict = new_dict
-        self.save_values()
-
-    def __str__(self):
-        return "Dataset name = " + self.data['label'] + "\n" + "Dataset url = " + self.url
+        return my_labels, new_dict
 
     def export_json(self, filename):
         print("exporting dataset to file", filename, "...")
@@ -113,28 +118,31 @@ class DatasetINE:
             self.add_value(my_value)
 
 
-def exist_label(value: DatasetValue, label):
-    flag = False
-    for item in value.get_labels():
-        if item == label[0]:
-            flag = True
-    return flag
-    # set1 = set(value.get_labels())
-    # set2 = set(label)
-
-
 def exist_label(value: DatasetValue, args):
-    every_label_found = [False] * len(args)
+    label_found = [False] * len(args)
     counter = 0
     final_flag = True
     for item in value.get_labels():
         for label in args.values():
             if item == label:
-                every_label_found[counter] = True
+                label_found[counter] = True
                 counter += 1
-    for flag in every_label_found:
+    for flag in label_found:
         if flag is False:
             final_flag = False
     return final_flag
-    # set1 = set(value.get_labels())
-    # set2 = set(label)
+
+
+def request_error_handler(url):
+    try:
+        r = requests.get(url, timeout=3)
+        r.raise_for_status()
+        return True
+    except requests.exceptions.HTTPError as err_h:
+        print("Http Error:", err_h)
+    except requests.exceptions.ConnectionError as err_c:
+        print("Error Connecting:", err_c)
+    except requests.exceptions.Timeout as err_t:
+        print("Timeout Error:", err_t)
+    except requests.exceptions.RequestException as err:
+        print("Oops: Something happened!", err)
