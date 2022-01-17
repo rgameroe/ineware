@@ -1,5 +1,4 @@
 import json
-# importing the requests library
 import requests
 import itertools
 
@@ -25,7 +24,7 @@ class DatasetINE:
         if request_error_handler(url):
             self.data = requests.get(url).json()
             self.values = self.data['value']
-            self.notes = "------- Dataset notes --------\n" + str(self.data['note']) + "\n--------------------------\n"
+            self.notes = str(self.data['note'])
             self.valuesList = []
             self.labels, self.dict = self.create_dict()
             self.save_values()
@@ -82,26 +81,6 @@ class DatasetINE:
             print('No values found for labels ' + str(kwargs))
             return []
 
-    def print_values(self):
-        print("________print_results call__________")
-        j = 0
-        if len(self.labels) < 3:
-            for i in range(len(self.dict[self.labels[0]]) - 1):
-                print("**", self.dict[self.labels[0]][i], '**')
-                for item in self.dict[self.labels[1]]:
-                    print("    ", item, 'value:', self.data['value'][j])
-                    j += 1
-        else:
-            for item in self.dict[self.labels[0]]:
-                print("**", item, '**')
-                for item1 in self.dict[self.labels[1]]:
-                    print("  ", item1)
-                    for item2 in self.dict[self.labels[2]]:
-                        print("    ", item2)
-                        for item3 in self.dict[self.labels[3]]:
-                            print("        ", item3, 'value:', self.data['value'][j])
-                            j += 1
-
     def save_values(self):
         all_list = []
         for i in range(len(self.labels)):
@@ -135,7 +114,7 @@ def exist_label(value: DatasetValue, args):
 
 def request_error_handler(url):
     try:
-        r = requests.get(url, timeout=3)
+        r = requests.get(url, timeout=10)
         r.raise_for_status()
         return True
     except requests.exceptions.HTTPError as err_h:

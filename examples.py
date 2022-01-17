@@ -10,7 +10,7 @@ if __name__ == '__main__':
 
     my_dataset = DatasetINE(my_url)
     formatted_dict = json.dumps(my_dataset.dict, indent=4, ensure_ascii=False)
-    print(my_dataset)
+    my_dataset.print_values_list()
     print(my_dataset.notes)
     print("\n------- Dataset labels types --------")
     print(my_dataset.labels)
@@ -25,7 +25,6 @@ if __name__ == '__main__':
         print(item)
     print('--------------')
     for item in my_dataset.get_value(Sexo="Hombres", Edad="21 años"):
-        my_dataset.get_value()
         print(item)
 
 
