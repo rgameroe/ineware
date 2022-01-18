@@ -1,5 +1,4 @@
-from dataset_class import DatasetINE, DatasetValue
-import json
+from ineware.dataset_class import DatasetINE
 
 if __name__ == '__main__':
     my_url = "https://servicios.ine.es/wstempus/jsstat/ES/DATASET/24387?nult=4"
