@@ -172,6 +172,15 @@ class DatasetINE:
         return my_labels, new_dict
 
     def export_json(self, filename):
+        """
+        This method exports a file in json format containing the raw dataset data
+
+        Args
+        -----
+        filename : str
+            the path of the generated file
+
+        """
         print("exporting dataset json to file", filename, "...")
         f = open(filename, "w", encoding='utf8')
         f.write(json.dumps(self.data, ensure_ascii=False, indent=4))
@@ -179,6 +188,15 @@ class DatasetINE:
         print("file", filename, "saved")
 
     def export_values(self, filename):
+        """
+        This method exports a file containing the list of DatasetValues of our dataset
+
+        Args
+        -----
+        filename : str
+            the path of the generated file
+
+        """
         print("exporting values to file", filename, "...")
         f = open(filename, "w", encoding='utf8')
         for item in self.datasetValues:
@@ -188,13 +206,41 @@ class DatasetINE:
         print("file", filename, "saved")
 
     def add_value(self, value):
+        """
+        This method appends a new item to the datasetValues list of our dataset
+
+        Args
+        -----
+        value : DatasetValue
+            the value to insert in the list
+
+        """
         self.datasetValues.append(value)
 
     def print_values_list(self):
+        """
+        This method prints to console every DatasetValue item in our dataset
+
+        """
         for item in self.datasetValues:
             print(item)
 
     def get_value(self, **kwargs):
+        """
+        This method looks for specific values contained in our dataset. If values match the pattern
+        given as argument, they are included in the returning list. For example we can give as argument:
+            Sexo="Hombres", Edad="20 años", Periodo="2021S1"
+
+        Args
+        ------
+        kwargs : dict
+            the labels and values we want to get.
+
+        Returns:
+            a list containing every matching DatasetValue object or empty list if there are no matches,
+            showing a message in this case.
+
+        """
         result_list = []
         for value in self.datasetValues:
             if exist_label(value, kwargs):
