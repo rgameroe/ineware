@@ -156,8 +156,8 @@ class DatasetINE:
         This method creates the dimensions list and the dimLabels dictionary of the DatasetINE object
 
         Returns:
-            -- a list with dimensions of the dataset
-            -- a dictionary containing every dimension and its labels
+            -- 1) a list with dimensions of the dataset
+            -- 2) a dictionary containing every dimension and its labels
 
         """
         new_dict = {}
@@ -214,11 +214,12 @@ class DatasetINE:
 
         for item, value in zip(res, self.data['value']):
             my_labels = list(item)
-            if value is not None and value.is_integer():
-                my_value = DatasetValue(my_labels, int(value))
-            else:
-                my_value = DatasetValue(my_labels, value)
-            self.add_value(my_value)
+            if value is not None:
+                if value.is_integer():
+                    my_value = DatasetValue(my_labels, int(value))
+                else:
+                    my_value = DatasetValue(my_labels, value)
+                self.add_value(my_value)
 
 
 def exist_label(value: DatasetValue, args):

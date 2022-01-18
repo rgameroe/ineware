@@ -2,7 +2,7 @@ import unittest
 import requests
 import pathlib as pl
 import os
-from dataset_class import DatasetINE, DatasetValue
+from dataset_class import DatasetINE, DatasetValue, exist_label, request_error_handler
 
 
 class TestDatasetINEClass(unittest.TestCase):
@@ -59,16 +59,20 @@ class TestDatasetINEClass(unittest.TestCase):
         self.assertEqual(len(actual_result), 1)
         self.assertEqual(expected_result, actual_result[0])
 
-    def test_isupper(self):
-        self.assertTrue('FOO'.isupper())
-        self.assertFalse('Foo'.isupper())
+    def test_exist_label(self):
+        my_url = "https://servicios.ine.es/wstempus/jsstat/ES/DATASET/24387?nult=4"
+        my_dataset = DatasetINE(my_url)
+        test_value = DatasetValue(['20 años', '2020S1'], 2352)
+        my_args_correct = {"Edad": "20 años", "Periodo": "2020S1"}
+        my_args_incorrect = {"Edad": "35 años"}
+        self.assertTrue(exist_label(test_value, my_args_correct))
+        self.assertFalse(exist_label(test_value, my_args_incorrect))
 
-    def test_split(self):
-        s = 'hello world'
-        self.assertEqual(s.split(), ['hello', 'world'])
-        # check that s.split fails when the separator is not a string
-        with self.assertRaises(TypeError):
-            s.split(2)
+    def test_request_error(self):
+        invalid_url = "https://ser*ERROR_IN_URL*.ine.es/wstempus/jsstat/ES/DATASET/24387"
+        valid_url = "https://servicios.ine.es/wstempus/jsstat/ES/DATASET/24387"
+        self.assertFalse(request_error_handler(invalid_url))
+        self.assertTrue(request_error_handler(valid_url))
 
 
 if __name__ == '__main__':

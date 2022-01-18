@@ -10,7 +10,7 @@ if __name__ == '__main__':
 
     my_dataset = DatasetINE(my_url)
     # print(my_dataset.print_values_list())
-    for item in my_dataset.get_value(Sexo="Hombres", Edad="20 años", Periodo="2021S1"):
+    for item in my_dataset.datasetValues:
         print(item)
 
     """
