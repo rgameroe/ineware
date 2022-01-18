@@ -252,6 +252,12 @@ class DatasetINE:
             return []
 
     def save_values(self):
+        """
+        This method insert into our dataset values list every item found on the raw
+        data. In order to do this, it relates every possible combination of labels
+        with the corresponding value.
+
+        """
         all_list = []
         for i in range(len(self.dimensions)):
             all_list.append(self.dimLabels[self.dimensions[i]])
@@ -269,6 +275,21 @@ class DatasetINE:
 
 
 def exist_label(value: DatasetValue, args):
+    """
+    This method checks if the arguments given match the DatasetValue passed as parameter.
+
+    Args
+    ------
+    value : DatasetValue
+        the DatasetValue to check if matches
+    args : list
+        the labels we want to check if match
+
+    Returns:
+        -- True if every label from args match the ones in DatasetValue
+        -- False otherwise
+
+    """
     label_found = [False] * len(args)
     counter = 0
     final_flag = True
