@@ -7,14 +7,13 @@ class DatasetValue:
     """
     This class represents a set formed by a dataset value together with the labels that identify it.
     For example in a dataset related with population, sexes and age, a DatasetValue could be:
-        ["Hombres", "35 años", 2.35]
+    ["Hombres", "35 años", 2.35]
 
-    Attributes
-    ----------
-    labels : list
-        a list containing the labels that identify the DatasetValue
-    value : int
-        the value related to the labels
+    Attributes:
+        labels : list
+            a list containing the labels that identify the DatasetValue
+        value : int
+            the value related to the labels
 
     """
     def __init__(self, labels, value):
@@ -305,6 +304,18 @@ def exist_label(value: DatasetValue, args):
 
 
 def request_error_handler(url):
+    """
+    This method is a handler for the request sent to the dataset url. It manages possible
+    errors thrown by the request and informs the user about what happened.
+
+    Args
+    url : str
+        the url to send the request to
+
+    Returns:
+        True if the request is completed successfuly
+
+    """
     try:
         r = requests.get(url, timeout=10)
         r.raise_for_status()
