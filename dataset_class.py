@@ -4,38 +4,162 @@ import itertools
 
 
 class DatasetValue:
+    """
+    This class represents a set formed by a dataset value together with the labels that identify it.
+    For example in a dataset related with population, sexes and age, a DatasetValue could be:
+        ["Hombres", "35 años", 2.35]
+
+    Attributes
+    ----------
+    labels : list
+        a list containing the labels that identify the DatasetValue
+    value : int
+        the value related to the labels
+
+    """
     def __init__(self, labels, value):
+        """
+        This method initializes DatasetValue with its labels and value
+
+        Args
+        -----
+        labels : list
+            a list containing the labels that identify the DatasetValue
+        value : int
+            the value related to the labels
+
+        """
         self.labels = labels
         self.value = value
 
     def __str__(self):
+        """
+        This method converts a DatasetValue item in a string
+
+        Returns:
+            a string containing the labels and value
+
+        """
         return str(self.labels) + " value: " + str(self.value)
 
+    def __eq__(self, other):
+        """
+        This method compares two instances of DatasetValue
+
+        Returns:
+            -- True if both objects are from DatasetValue class and have the same labels and value
+            -- False otherwise
+
+        """
+        if isinstance(other, DatasetValue):
+            return self.get_value() == other.get_value() and self.get_labels() == other.get_labels()
+        else:
+            return False
+
     def get_labels(self):
+        """
+        This method gets the labels of the DatasetValue
+
+        Returns:
+            a list containing the labels
+
+        """
         return self.labels
 
     def get_value(self):
+        """
+        This method gets the value of the DatasetValue
+
+        Returns:
+            an integer corresponding to the value
+
+        """
         return self.value
 
 
 class DatasetINE:
+    """
+    This class represents a dataset from INE. It stores all the information available about an
+    specific dataset from INE, just specifying the url associated to it when creating the object.
+
+    Attributes
+    ----------
+    url : str
+        the url the dataset is obtained from after sending a request
+    data : dict
+        a dictionary containing the entire json file obtained from url
+    name : str
+        the title of the dataset
+    values : list
+        a list of every value this dataset stores (just numeric values)
+    notes : str
+        a string representing the notes associated to the dataset. It gives us information such as unit
+        of measure (days, migration movements, travelers...) and other important details
+    datasetValues : list
+        a list containing class DatasetValue objects. It stores every value from dataset associated to
+        its identifying labels
+    dimensions : list
+        this list contains every dimension of this dataset. A dimension is every label category the dataset
+        has. For example, dimensions for dataset "Estancia media por comunidades autónomas y provincias" are:
+        ['Comunidades Autónomas y Provincias', 'Periodo']
+    dimLabels : dict
+        this dictionary contains every dimension and its different labels. Following the previous example,
+        for dataset "Estancia media por comunidades autónomas y provincias" dimLabels is:
+        { "Comunidades Autónomas y Provincias": [
+              "Andalucía",
+              "Almería",
+              "Cádiz",
+               ...
+          ],
+          "Periodo": [
+              "2021M11",
+              "2021M10",
+              ...
+          ]
+        }
+    """
     def __init__(self, url):
+        """
+        This method initializes a DatasetINE object using its url as argument
+
+        Args
+        -----
+        url : str
+            the url of the dataset you want to load into the new object
+
+        """
         self.url = url
         if request_error_handler(url):
             self.data = requests.get(url).json()
+            self.name = self.data['label']
             self.values = self.data['value']
             self.notes = str(self.data['note'])
-            self.valuesList = []
-            self.labels, self.dict = self.create_dict()
+            self.datasetValues = []
+            self.dimensions, self.dimLabels = self.create_dict()
             self.save_values()
 
     def __str__(self):
+        """
+        This method gives us the main info about a DatasetINE object
+
+        Returns:
+            a string containing the title and url of the dataset
+
+        """
         return "------- Dataset info --------\n" + \
-               "Name = " + self.data['label'] + "\n" +\
+               "Name = " + self.name + "\n" +\
                "url = " + self.url + "\n" +\
                "-----------------------------\n"
 
     def create_dict(self):
+        """
+        This method creates the dimensions list and the dimLabels dictionary of the DatasetINE object
+
+        Returns:
+            -- a list with dimensions of the dataset
+            -- a dictionary containing every dimension and its labels
+
+        """
         new_dict = {}
         my_labels = []
         for key, value in self.data['dimension'].items():
@@ -48,7 +172,7 @@ class DatasetINE:
         return my_labels, new_dict
 
     def export_json(self, filename):
-        print("exporting dataset to file", filename, "...")
+        print("exporting dataset json to file", filename, "...")
         f = open(filename, "w", encoding='utf8')
         f.write(json.dumps(self.data, ensure_ascii=False, indent=4))
         f.close()
@@ -57,22 +181,22 @@ class DatasetINE:
     def export_values(self, filename):
         print("exporting values to file", filename, "...")
         f = open(filename, "w", encoding='utf8')
-        for item in self.valuesList:
+        for item in self.datasetValues:
             my_string = str(item) + '\n'
             f.write(my_string)
         f.close()
         print("file", filename, "saved")
 
     def add_value(self, value):
-        self.valuesList.append(value)
+        self.datasetValues.append(value)
 
     def print_values_list(self):
-        for item in self.valuesList:
+        for item in self.datasetValues:
             print(item)
 
     def get_value(self, **kwargs):
         result_list = []
-        for value in self.valuesList:
+        for value in self.datasetValues:
             if exist_label(value, kwargs):
                 result_list.append(value)
         if len(result_list) > 0:
@@ -83,14 +207,14 @@ class DatasetINE:
 
     def save_values(self):
         all_list = []
-        for i in range(len(self.labels)):
-            all_list.append(self.dict[self.labels[i]])
+        for i in range(len(self.dimensions)):
+            all_list.append(self.dimLabels[self.dimensions[i]])
 
         res = list(itertools.product(*all_list))
 
         for item, value in zip(res, self.data['value']):
             my_labels = list(item)
-            if value.is_integer():
+            if value is not None and value.is_integer():
                 my_value = DatasetValue(my_labels, int(value))
             else:
                 my_value = DatasetValue(my_labels, value)
