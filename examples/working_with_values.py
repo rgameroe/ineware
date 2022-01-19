@@ -27,6 +27,12 @@ if __name__ == '__main__':
         print(item)
     print("-------------------------------------------------")
 
+    # If we look for a label that does not exists, INEware will show a warning message
+    print("------- No values found example ----------")
+    for item in my_dataset.get_value(Provincia="AÑMERIA", Residencia="Residentes en España"):
+        print(item)
+    print("------------------------------------------")
+
     # If we do not remember what are the names of the labels in this dataset we can call my_dataset.dimLabels
     print("\n------- Dataset dimensions and labels --------")
     print(my_dataset.dimLabels)
