@@ -1,6 +1,10 @@
 from ineware.dataset_class import DatasetINE
 import json
 
+"""
+    Thanks to INEware library you can get any info you need from INE datasets in a really simple way.
+    Just access the different attributes of the DatasetINE object and use them as you need!
+"""
 
 if __name__ == '__main__':
 
@@ -12,7 +16,7 @@ if __name__ == '__main__':
     print(my_dataset)
 
     # Show dataset notes
-    print("\n------- Dataset notes --------")
+    print("------- Dataset notes --------")
     print(my_dataset.notes)
     print('---------------------------------')
 
@@ -26,3 +30,4 @@ if __name__ == '__main__':
     formatted_dict = json.dumps(my_dataset.dimLabels, indent=4, ensure_ascii=False)
     print("\n------- Dataset dimensions and labels --------")
     print(formatted_dict)
+    print("\n----------------------------------------------")
