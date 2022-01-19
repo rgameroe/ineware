@@ -1,83 +1,65 @@
-Making a PyPI-friendly README
-README files can help your users understand your project and can be used to set your project’s description on PyPI. This guide helps you create a README in a PyPI-friendly format and include your README in your package so it appears on PyPI.
+# INEware
 
-Creating a README file
-README files for Python projects are often named README, README.txt, README.rst, or README.md.
+INEware is a lightweight Python library that works as a middleware between the client and the API json-stat that INE 
+(Instituto Nacional de Estadística) offers to its users.
 
-For your README to display properly on PyPI, choose a markup language supported by PyPI. Formats supported by PyPI’s README renderer are:
+This library is designed to facilitate the handling of data from INE datasets, as well as integrating them into a 
+programmatic environment where we can get the most out of this valuable information.
 
-plain text
-
-reStructuredText (without Sphinx extensions)
-
-Markdown (GitHub Flavored Markdown by default, or CommonMark)
-
-It’s customary to save your README file in the root of your project, in the same directory as your setup.py file.
-
-Including your README in your package’s metadata
-To include your README’s contents as your package description, set your project’s Description and Description-Content-Type metadata, typically in your project’s setup.py file.
-
-See also
-Description
-
-Description-Content-Type
-
-For example, to set these values in a package’s setup.py file, use setup()’s long_description and long_description_content_type.
-
-Set the value of long_description to the contents (not the path) of the README file itself. Set the long_description_content_type to an accepted Content-Type-style value for your README file’s markup, such as text/plain, text/x-rst (for reStructuredText), or text/markdown.
-
-Note If you’re using GitHub-flavored Markdown to write a project’s description, ensure you upgrade the following tools:
-
-Unix/macOS
-python3 -m pip install --user --upgrade setuptools wheel twine
-
-Windows
-The minimum required versions of the respective tools are:
-
-setuptools >= 38.6.0
-
-wheel >= 0.31.0
-
-twine >= 1.11.0
-
-It’s recommended that you use twine to upload the project’s distribution packages:
-
-twine upload dist/*
-For example, see this setup.py file, which reads the contents of README.md as long_description and identifies the markup as GitHub-flavored Markdown:
-
-from setuptools import setup
-
-# Installation read the contents of your README file
-from pathlib import Path
-this_directory = Path(__file__).parent
-long_description = (this_directory / "README.md").read_text()
-
-setup(
-    name='an_example_package',
-    # other arguments omitted
-    long_description=long_description,
-    long_description_content_type='text/markdown'
-)
-Validating reStructuredText markup
-If your README is written in reStructuredText, any invalid markup will prevent it from rendering, causing PyPI to instead just show the README’s raw source.
-
-Note that Sphinx extensions used in docstrings, such as directives and roles (e.g., “:py:func:`getattr`” or “:ref:`my-reference-label`”), are not allowed here and will result in error messages like “Error: Unknown interpreted text role "py:func".”.
-
-You can check your README for markup errors before uploading as follows:
-
-Install the latest version of twine; version 1.12.0 or higher is required:
+## Installation
 
 
-Unix/macOS
-python3 -m pip install --upgrade twine
+## Kick off
 
-Windows
-Build the sdist and wheel for your project as described under Packaging your project.
+A full set of examples can be found the ****
 
-Run twine check on the sdist and wheel:
+To get started****
 
-twine check dist/*
-This command will report any problems rendering your README. If your markup renders fine, the command will output Checking distribution FILENAME: Passed.
+### Title3
+
+```python
+from ineware.dataset_class import DatasetINE
+import json
+
+"""
+    Thanks to INEware library you can get any info you need from INE datasets in a really simple way.
+    Just access the different attributes of the DatasetINE object and use them as you need!
+"""
+
+if __name__ == '__main__':
+
+    # Initialize a DatasetINE object using its url
+    my_url = "https://servicios.ine.es/wstempus/jsstat/ES/DATASET/24387"
+    my_dataset = DatasetINE(my_url)
+
+    # Show dataset info by just printing it!
+    print(my_dataset)
+
+    # Show dataset notes
+    print("------- Dataset notes --------")
+    print(my_dataset.notes)
+    print('---------------------------------')
+
+    # Show dataset dimensions or attributes
+    print("\n------- Dataset dimensions --------")
+    print(my_dataset.dimensions)
+    print('---------------------------------')
+
+    # Show dataset dimensions and labels for each one
+    # We reformat this dictionary by simply applying some indentation and removing ascii characters
+    formatted_dict = json.dumps(my_dataset.dimLabels, indent=4, ensure_ascii=False)
+    print("\n------- Dataset dimensions and labels --------")
+    print(formatted_dict)
+    print("\n----------------------------------------------")
 ```
-pip install  
-```
+## Links
+
+You can get more info about:
+- How INE API works 
+- URLs Definitions
+- How to get table identifiers
+
+And much more in the [INE official page](https://www.ine.es/dyngs/DataLab/es/manual.html?cid=1259945948443)
+
+
+
