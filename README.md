@@ -9,7 +9,7 @@ programmatic environment where we can get the most out of this valuable informat
 ## Installation
 
 ```bash
-
+pip install ineware
 ```
 
 
@@ -36,7 +36,6 @@ from ineware.dataset_class import DatasetINE
 import json
 
 if __name__ == '__main__':
-
     # Initialize a DatasetINE object using its url
     my_url = "https://servicios.ine.es/wstempus/jsstat/ES/DATASET/24387"
     my_dataset = DatasetINE(my_url)
@@ -87,21 +86,24 @@ if __name__ == '__main__':
     # Suppose we want to get only the number of Almería foreign travelers in each month of 2020
     # As method get_value() returns a list, we can iterate over each value in a simple way to show them
     print("\n------- Almería foreign travelers 2020 --------")
-    for item in my_dataset.get_value(Provincia="Almería", ViajerosPernoctaciones="Viajero", Residencia="Residentes en el Extranjero"):
+    for item in my_dataset.get_value(Provincia="Almería", ViajerosPernoctaciones="Viajero",
+                                     Residencia="Residentes en el Extranjero"):
         print(item)
     print("-------------------------------------------------")
 ```
+### Looking for more examples?
 
+Get the source code in my [bitbucket repo](https://bitbucket.org/rgameroe/ineware/src/master/).
+There are more examples at /examples directory
 ## Links
 
-You can get more info about:
-- How INE API works 
-- URLs Definitions
-- How to get table identifiers
+You can get more info about how INE API works, URLs Definitions or how to get table identifiers...
 
-And much more in the [INE official page](https://www.ine.es/dyngs/DataLab/es/manual.html?cid=1259945948443)
+All of this an more in the [INE official page](https://www.ine.es/dyngs/DataLab/es/manual.html?cid=1259945948443)
 
 ## License
 
+MIT License
 
+Copyright (c) 2022 Roberto Gamero
 
