@@ -2,7 +2,6 @@ import unittest
 import requests
 import pathlib as pl
 import os
-import logging as log
 from ineware.dataset_class import DatasetINE, DatasetValue, exist_label, request_error_handler
 
 
