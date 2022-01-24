@@ -44,21 +44,15 @@ if __name__ == '__main__':
     print(my_dataset)
 
     # Show dataset notes
-    print("------- Dataset notes --------")
     print(my_dataset.notes)
-    print('---------------------------------')
 
     # Show dataset dimensions or attributes
-    print("\n------- Dataset dimensions --------")
     print(my_dataset.dimensions)
-    print('---------------------------------')
 
     # Show dataset dimensions and labels for each one
     # We reformat this dictionary by simply applying some indentation and removing ascii characters
     formatted_dict = json.dumps(my_dataset.dimLabels, indent=4, ensure_ascii=False)
-    print("\n------- Dataset dimensions and labels --------")
     print(formatted_dict)
-    print("\n----------------------------------------------")
 ```
 
 ### Work with Dataset values
@@ -79,17 +73,13 @@ if __name__ == '__main__':
 
     # Print name of the dataset and unit of measure just to know what we are working with
     print(my_dataset)
-    print("------- Dataset notes --------")
     print(my_dataset.notes)
-    print('---------------------------------')
 
     # Suppose we want to get only the number of Almería foreign travelers in each month of 2020
     # As method get_value() returns a list, we can iterate over each value in a simple way to show them
-    print("\n------- Almería foreign travelers 2020 --------")
     for item in my_dataset.get_value(Provincia="Almería", ViajerosPernoctaciones="Viajero",
                                      Residencia="Residentes en el Extranjero"):
         print(item)
-    print("-------------------------------------------------")
 ```
 ### Looking for more examples?
 
