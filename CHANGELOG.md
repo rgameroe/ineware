@@ -22,5 +22,16 @@ Realease version
  
 ### Fixed
 
+
+## [0.0.2] - 25-01-2022
+
+### Added
+- changelog.
+
+### Changed
+- examples from readme.
  
-### [Next realeses]
+### Fixed
+
+
+
