@@ -27,11 +27,14 @@ Realease version
 
 ### Added
 - changelog.
+- new test cases.
 
 ### Changed
-- examples from readme.
+- info and examples from readme.
  
 ### Fixed
+- inner documentation.
+- 
 
 
 

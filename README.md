@@ -85,7 +85,7 @@ if __name__ == '__main__':
 ```
 ### Looking for more examples?
 
-Get the source code in my [bitbucket repo](https://bitbucket.org/rgameroe/ineware/src/master/).
+Get the source code in my [github repo](https://github.com/rgameroe/ineware).
 There are more examples at /examples directory
 ## Links
 
