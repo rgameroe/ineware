@@ -1,1 +1,3 @@
 theme: jekyll-theme-cayman
+title: INEware
+description: A lightweight Python library to work with INE API json-stat
