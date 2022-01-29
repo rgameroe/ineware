@@ -7,10 +7,10 @@ This library is designed to facilitate the handling of data from INE datasets, a
 programmatic environment where we can get the most out of this valuable information.
 
 * [Installation](#installation)
-* [Kick off](#usage)
+* [Kick off](#kick-off)
   * [Show Dataset info](#show-dataset-info)
   * [Work with Dataset values](#work-with-dataset-values)
-  * [More examples](#looking-for-more-examples?)
+  * [More examples](#looking-for-more-examples)
 * [Links](#links)
 * [License](#license)
 
