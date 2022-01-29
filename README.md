@@ -13,8 +13,10 @@ You can install INEware by simply executing this command:
 ```bash
 pip install ineware
 ```
-If you don't
-
+If you already have installed ineware, you can upgrade it using:
+```
+pip install ineware --upgrade
+```
 ## Kick off
 
 The first step to use INEware is creating our DatasetINE object. Simply pass the url of the dataset you 
