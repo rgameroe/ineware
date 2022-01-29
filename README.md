@@ -13,7 +13,10 @@ You can install INEware by simply executing this command:
 ```bash
 pip install ineware
 ```
-If you don't
+If you already have installed ineware, you can upgrade it using:
+```bash
+pip install ineware --upgrade
+```
 
 ## Kick off
 
