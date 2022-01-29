@@ -6,23 +6,12 @@ INEware is a lightweight Python library that works as a middleware between the c
 This library is designed to facilitate the handling of data from INE datasets, as well as integrating them into a 
 programmatic environment where we can get the most out of this valuable information.
 
-* **[Overview](#overview)**
-  * [Preview Samples](#preview-samples) 
-* **[Requirements](#requirements)**
-* **[Installation](#installation)**
-  * [CocoaPods](#cocoapods)
-  * [Carthage](#carthage)
-  * [Swift Package Manager](#swift-package-manager)
-* **[Usage](#usage)**
-  * [Code-less Storyboard Implementation](#code-less-storyboard-implementation)
-  * [Code Implementation](#code-implementation)
-* **[Customization](#customization)**
-  * [SideMenuManager](#sidemenumanager)
-  * [SideMenuNavigationController](#sidemenunavigationcontroller)
-  * [SideMenuNavigationControllerDelegate](#sidemenunavigationcontrollerdelegate)
-  * [Advanced](#advanced)
-* [Known Issues](#known-issues)
-* [Thank You](#thank-you)
+* [Installation](#installation)
+* [Kick off](#usage)
+  * [Show Dataset info](#show-dataset-info)
+  * [Work with Dataset values](#work-with-dataset-values)
+  * [More examples](#looking-for-more-examples?)
+* [Links](#links)
 * [License](#license)
 
 
