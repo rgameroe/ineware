@@ -1,3 +1,4 @@
-theme: jekyll-theme-cayman
-title: INEware
+remote_theme: pages-themes/cayman@v0.2.0
+plugins:
+- jekyll-remote-theme # add this line to the plugins list if you already have one
 description: A lightweight Python library to work with INE API json-stat
