@@ -11,7 +11,7 @@ setup(
     long_description_content_type="text/markdown",
     author="Roberto Gamero",
     author_email="rgameroe@alumnos.unex.es",
-    url='https://bitbucket.org/rgameroe/ineware/src/master/',
+    url='https://github.com/rgameroe/ineware',
     install_requires=[
         'requests>=2.25.1'
     ],
