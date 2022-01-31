@@ -15,9 +15,9 @@ programmatic environment where we can get the most out of this valuable informat
 * [Links](#links)
 * [License](#license)
 
-## Why use INEware ?
+## Why use INEware?
 
-INE website offer an API in [JSON-stat format](https://json-stat.org/). This format is based on publishing the statistical data as tables organized in dimensions that in turn have different categories.
+INE website offers an API in [JSON-stat format](https://json-stat.org/). This format is based on publishing the statistical data as tables organized in dimensions that in turn have different categories.
 
 This is an example of a JSON-stat dataset:
 
@@ -62,7 +62,9 @@ In this case it is easy to deduce that the association is as follows:
 
 But what happens if we have a dataset with 5 dimensions and more than 20 categories each? Getting all these associations becomes much more tedious.
 
-INEware is the solution to the problem! With INEware you will be able to:
+INEware is the solution to the problem! 
+
+With INEware you will be able to:
 
 *   Manage INE datasets as Python objects.
 *   Access its attributes and methods in a simple and intuitive way.
@@ -153,6 +155,7 @@ if __name__ == '__main__':
 
 Get the source code in my [github repo](https://github.com/rgameroe/ineware).
 There are more examples at /examples directory
+
 ## Links
 
 You can get more info about how INE API works, URLs Definitions or how to get table identifiers,
@@ -163,130 +166,3 @@ in the [INE official page](https://www.ine.es/dyngs/DataLab/es/manual.html?cid=1
 MIT License
 
 Copyright (c) 2022 Roberto Gamero
-
-
-
-
----
-layout: default
----
-
-Text can be **bold**, _italic_, or ~~strikethrough~~.
-
-[Link to another page](./another-page.html).
-
-There should be whitespace between paragraphs.
-
-There should be whitespace between paragraphs. We recommend including a README, or a file with information about your project.
-
-# Header 1
-
-This is a normal paragraph following a header. GitHub is a code hosting platform for version control and collaboration. It lets you and others work together on projects from anywhere.
-
-## Header 2
-
-> This is a blockquote following a header.
->
-> When something is important enough, you do it even if the odds are not in your favor.
-
-### Header 3
-
-```js
-// Javascript code with syntax highlighting.
-var fun = function lang(l) {
-  dateformat.i18n = require('./lang/' + l)
-  return true;
-}
-```
-
-```ruby
-# Ruby code with syntax highlighting
-GitHubPages::Dependencies.gems.each do |gem, version|
-  s.add_dependency(gem, "= #{version}")
-end
-```
-
-#### Header 4
-
-*   This is an unordered list following a header.
-*   This is an unordered list following a header.
-*   This is an unordered list following a header.
-
-##### Header 5
-
-1.  This is an ordered list following a header.
-2.  This is an ordered list following a header.
-3.  This is an ordered list following a header.
-
-###### Header 6
-
-| head1        | head two          | three |
-|:-------------|:------------------|:------|
-| ok           | good swedish fish | nice  |
-| out of stock | good and plenty   | nice  |
-| ok           | good `oreos`      | hmm   |
-| ok           | good `zoute` drop | yumm  |
-
-### There's a horizontal rule below this.
-
-* * *
-
-### Here is an unordered list:
-
-*   Item foo
-*   Item bar
-*   Item baz
-*   Item zip
-
-### And an ordered list:
-
-1.  Item one
-1.  Item two
-1.  Item three
-1.  Item four
-
-### And a nested list:
-
-- level 1 item
-  - level 2 item
-  - level 2 item
-    - level 3 item
-    - level 3 item
-- level 1 item
-  - level 2 item
-  - level 2 item
-  - level 2 item
-- level 1 item
-  - level 2 item
-  - level 2 item
-- level 1 item
-
-### Small image
-
-![Octocat](https://github.githubassets.com/images/icons/emoji/octocat.png)
-
-### Large image
-
-![Branching](https://guides.github.com/activities/hello-world/branching.png)
-
-
-### Definition lists can be used with HTML syntax.
-
-<dl>
-<dt>Name</dt>
-<dd>Godzilla</dd>
-<dt>Born</dt>
-<dd>1952</dd>
-<dt>Birthplace</dt>
-<dd>Japan</dd>
-<dt>Color</dt>
-<dd>Green</dd>
-</dl>
-
-```
-Long, single-line code blocks should not wrap. They should horizontally scroll if they are too long. This line should be long enough to demonstrate this.
-```
-
-```
-The final element.
-```
