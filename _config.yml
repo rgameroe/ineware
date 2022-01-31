@@ -1,7 +1,7 @@
 remote_theme: tuur29/pages-themes-cayman
 title: INEware
 description: A lightweight Python library to work with the API json-stat from INE (Instituto Nacional de Estadística) 
-show_downloads: ["true" or "false" to indicate whether to provide a download URL]
+show_downloads: true
 darkmode: false
 hide_first_title: false # Useful if README.md is used on both github and pages
 logo_url: ./logo.png # Either absolute or relative url
