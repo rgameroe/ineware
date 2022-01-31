@@ -6,6 +6,7 @@ INEware is a lightweight Python library that works as a middleware between the c
 This library is designed to facilitate the handling of data from INE datasets, as well as integrating them into a 
 programmatic environment where we can get the most out of this valuable information.
 
+* [Why use INEware?](#why-use-ineware)
 * [Installation](#installation)
 * [Kick off](#kick-off)
   * [Show Dataset info](#show-dataset-info)
@@ -14,6 +15,59 @@ programmatic environment where we can get the most out of this valuable informat
 * [Links](#links)
 * [License](#license)
 
+## Why use INEware ?
+
+INE website offer an API in [JSON-stat format](https://json-stat.org/). This format is based on publishing the statistical data as tables organized in dimensions that in turn have different categories.
+
+This is an example of a JSON-stat dataset:
+
+```json
+{
+   "version" : "2.0",
+   "class" : "dataset",
+   "label" : "Population in Tuvalu in 2002. By sex",
+   "value" : [4729, 4832, 9561],
+   "id" : ["metric", "time", "geo", "sex"],
+   "size" : [1, 1, 1, 3],
+   "dimension" : {
+      "sex" : {
+         "label" : "sex",
+         "category" : {
+            "index" : {
+              "M" : 0,
+              "F" : 1,
+              "T" : 2
+            },
+            "label" : {
+              "M" : "men",
+              "F" : "women",
+              "T" : "total"
+            }
+         }
+      }
+   }
+}
+```
+However, the main problem with this format is the difficulty of associating the categories with their corresponding values. 
+
+This association of values can be done taking into account the order in which the categories appear. All categories have an associated index.
+
+In this case it is easy to deduce that the association is as follows:
+
+| Category     | Value             | 
+|:-------------|:------------------|
+| men          | 4729              |
+| woman        | 4832              |
+| total        | 9561              |
+
+But what happens if we have a dataset with 5 dimensions and more than 20 categories each? Getting all these associations becomes much more tedious.
+
+INEware is the solution to the problem! With INEware you will be able to:
+
+*   Manage INE datasets as Python objects.
+*   Access its attributes and methods in a simple and intuitive way.
+*   Filter values based on different criteria.
+*   Use all this valuable information in larger processes.
 
 ## Installation
 
