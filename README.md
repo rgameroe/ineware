@@ -1,4 +1,4 @@
-# INEware
+[INEware](/docs/ineware_logo.PNG)
 
 INEware is a lightweight Python library that works as a middleware between the client and the API json-stat that [INE](https://www.ine.es/) 
 (Instituto Nacional de Estadística) offers to its users.
